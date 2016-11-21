@@ -1,7 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 module.exports = {
-    entry: './main.jsx',
+    entry: './index.jsx',
     output: {
         path: __dirname,
         filename: 'bundle.js'
@@ -12,8 +12,8 @@ module.exports = {
                 warnings: false,
             },
         }),
-        //new webpack.optimize.OccurenceOrderPlugin(),
-        //new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin(),
         new webpack.BannerPlugin([
             "//",
             "// CRANE UI v1.0.0",
