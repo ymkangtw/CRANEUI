@@ -11,6 +11,7 @@ var app = express();
 app.use(express.static(__dirname));
 var server = app.listen(80);
 var sio = require('socket.io').listen(server);
+
 var client1 = new net.Socket();
 var client2 = new net.Socket();
 var client3 = new net.Socket();

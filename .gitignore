@@ -1,5 +1,8 @@
 # Dependency directory
 node_modules
 
+# VSCode
+.vscode
+
 # Mac OSX
 .DS_Store
