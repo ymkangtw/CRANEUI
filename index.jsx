@@ -9,9 +9,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import MyComponent from './MyComponent.jsx';
 import Main from './components/main.jsx'
+import CraneInfo from './components/craneinfo.jsx'
+
 
 injectTapEventPlugin();
-
+/*
 class App extends React.Component {
     render() {
         return (
@@ -22,8 +24,8 @@ class App extends React.Component {
         );
     }
 }
+*/
 
-/*
 const lightMuiTheme = getMuiTheme(lightBaseTheme);
 
 class App extends React.Component {
@@ -31,13 +33,15 @@ class App extends React.Component {
         return (
             <MuiThemeProvider muiTheme={lightMuiTheme}>
                 <div>
-                    <h1>React Example!</h1>
+                    {/*
                     <MyComponent />
-                    <Main />
+                    */}
+                    <CraneInfo />
+                    <Main width="800" height="600" />
                 </div>
             </MuiThemeProvider>
         );
     }
 }
-*/
+
 ReactDOM.render(<App/>, document.getElementById('app'));
