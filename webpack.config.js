@@ -12,14 +12,16 @@ module.exports = {
                 warnings: false,
             },
         }),
-        new webpack.optimize.OccurenceOrderPlugin(),
+        //new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin(),
+        /*
         new webpack.BannerPlugin([
             "//",
             "// CRANE UI v1.0.0",
             "//",
             "//"
         ].join("\n"), { raw: true }),
+        */
         new webpack.DefinePlugin({
             "process.env": {
                 NODE_ENV: JSON.stringify("production")

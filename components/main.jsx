@@ -13,7 +13,6 @@ export default class Main extends React.Component {
     }
     componentDidMount(){
         var el = ReactDOM.findDOMNode(this);
-        //this.circle = new Circle(el);
         this.warehouse = new Warehouse(el);
         this.crane = new Crane(el);
         this.warehouse.render();
