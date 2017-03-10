@@ -6,7 +6,7 @@ import cio from 'socket.io-client';
 
 const PaperStyle = {
     //height: 400,
-    width: 300,
+    width: 280,
     margin: 20,
     textAlign: 'center',
     display: 'inline-block',
@@ -22,24 +22,24 @@ export default class CraneInfo extends React.Component {
         super(props);
         this.socket = cio.connect();
         this.state = {
-            rspdata: {}
+            rspData: {}
         };
         this.updateData = this.updateData.bind(this);
     }
     componentDidMount() {
-        this.socket.on('rspdata', this.updateData);
+        this.socket.on('rspCraneStatus', this.updateData);
     }
     shouldComponentUpdate(nextProps, nextState) {
         if (this.props !== nextProps) {
             return true;
         }
-        if (this.state.rspdata !== nextState.rspdata) {
+        if (this.state.rspData !== nextState.rspData) {
             return true;
         }
         return false;
     }
     updateData(data) {
-        this.setState({ rspdata: data });
+        this.setState({ rspData: data });
     }
     render() {
         return (
@@ -50,40 +50,40 @@ export default class CraneInfo extends React.Component {
                         <th><h5>CRANE STATUS</h5></th>
                     </tr>
                     <tr>
-                        <td>WORKID</td><td>{this.state.rspdata.WORKID}</td>
+                        <td>WORKID</td><td>{this.state.rspData.WORKID}</td>
                     </tr>
                     <tr>
-                        <td>HOUSEID</td><td>{this.state.rspdata.HOUSEID}</td>
+                        <td>HOUSEID</td><td>{this.state.rspData.HOUSEID}</td>
                     </tr>
                     <tr>
-                        <td>CRANEID</td><td>{this.state.rspdata.CRANEID}</td>
+                        <td>CRANEID</td><td>{this.state.rspData.CRANEID}</td>
                     </tr>
                     <tr>
-                        <td>WORKTIME</td><td>{this.state.rspdata.WORKTIME}</td>
+                        <td>WORKTIME</td><td>{this.state.rspData.WORKTIME}</td>
                     </tr>
                     <tr>
-                        <td>RESULT</td><td>{this.state.rspdata.RESULT}</td>
+                        <td>RESULT</td><td>{this.state.rspData.RESULT}</td>
                     </tr>
                     <tr>
-                        <td>POSX</td><td>{this.state.rspdata.POSX}</td>
+                        <td>POSX</td><td>{this.state.rspData.POSX}</td>
                     </tr>
                     <tr>
-                        <td>POSY</td><td>{this.state.rspdata.POSY}</td>
+                        <td>POSY</td><td>{this.state.rspData.POSY}</td>
                     </tr>
                     <tr>
-                        <td>POSZ</td><td>{this.state.rspdata.POSZ}</td>
+                        <td>POSZ</td><td>{this.state.rspData.POSZ}</td>
                     </tr>
                     <tr>
-                        <td>DEVSTATUS</td><td>{this.state.rspdata.DEVSTATUS}</td>
+                        <td>DEVSTATUS</td><td>{this.state.rspData.DEVSTATUS}</td>
                     </tr>
                     <tr>
-                        <td>ERRORCODE</td><td>{this.state.rspdata.ERRORCODE}</td>
+                        <td>ERRORCODE</td><td>{this.state.rspData.ERRORCODE}</td>
                     </tr>
                     <tr>
-                        <td>ACCEPTABLE</td><td>{this.state.rspdata.ACCEPTABLE}</td>
+                        <td>ACCEPTABLE</td><td>{this.state.rspData.ACCEPTABLE}</td>
                     </tr>
                     <tr>
-                        <td>MODE</td><td>{this.state.rspdata.MODE}</td>
+                        <td>MODE</td><td>{this.state.rspData.MODE}</td>
                     </tr>
                 </table>
 
@@ -97,7 +97,7 @@ export default class CraneInfo extends React.Component {
                     <TableBody displayRowCheckbox={false}>
                         <TableRow>
                             <TableRowColumn>WORKID</TableRowColumn>
-                            <TableRowColumn>{this.state.rspdata.WORKID}</TableRowColumn>
+                            <TableRowColumn>{this.state.rspData.WORKID}</TableRowColumn>
                         </TableRow>
                         <TableRow>
                             <TableRowColumn>HOUSEID</TableRowColumn>
