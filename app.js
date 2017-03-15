@@ -12,6 +12,8 @@ app.use(express.static(__dirname));
 var server = app.listen(80);
 var sio = require('socket.io').listen(server);
 
+
+
 var client1 = new net.Socket();
 var client2 = new net.Socket();
 var client3 = new net.Socket();
@@ -155,14 +157,85 @@ cmd_ack = {
 client1.connect(PORT1, HOST, function() {
     console.log('Connect to: ' + HOST + ':' + PORT1);
     //SEND COMMAND TO CRANE
+    sio.sockets.on('connection', function(socket) {
+        socket.on('sendWMSCMD', function(data) {
+            var sendBuf = new Buffer(114);
+            sendBuf.fill(0, 0, 114);
+            //var currentDT = moment(new Date()).format('YYYYMMDDHHmmss');
+            cmd_req = {
+                WORKID: data.WORKID,
+                HOUSEID: data.HOUSEID,
+                CRANEID: data.CRANEID,
+                WORKTIME: data.WORKTIME,
+                COILID: data.COILID,
+                FROMX: data.FROMX,
+                FROMY: data.FROMY,
+                FROMZ: data.FROMZ,
+                TOX: data.TOX,
+                TOY: data.TOY,
+                TOZ: data.TOZ,
+                COILINNDIA: data.COILINNDIA,
+                COILOUTDIA: data.COILOUTDIA,
+                COILWIDTH: data.COILWIDTH,
+                COILWEIGHT: data.COILWEIGHT
+            };
+            //WORKID
+            sendBuf.writeInt8(16, 0);
+            sendBuf.writeInt8(cmd_req.WORKID.length, 1);
+            sendBuf.fill(cmd_req.WORKID, 2, 2 + cmd_req.WORKID.length);
+            //HOUSEID
+            sendBuf.writeInt8(10, 18);
+            sendBuf.writeInt8(cmd_req.HOUSEID.length, 19);
+            sendBuf.fill(cmd_req.HOUSEID, 20, 20 + cmd_req.HOUSEID.length);
+            //CRANEID
+            sendBuf.writeInt8(10, 28);
+            sendBuf.writeInt8(cmd_req.CRANEID.length, 29);
+            sendBuf.fill(cmd_req.CRANEID, 30, 30 + cmd_req.CRANEID.length);
+            //WORKDTIME
+            sendBuf.writeInt8(16, 38);
+            sendBuf.writeInt8(cmd_req.WORKTIME.length, 39);
+            sendBuf.fill(cmd_req.WORKTIME, 40, 40 + cmd_req.WORKTIME.length);
+            //COILID
+            sendBuf.writeInt8(16, 56);
+            sendBuf.writeInt8(cmd_req.COILID.length, 57);
+            sendBuf.fill(cmd_req.COILID, 58, 58 + cmd_req.COILID.length);
+            //FROMX
+            sendBuf.writeFloatBE(cmd_req.FROMX, 74);
+            //FROMY
+            sendBuf.writeFloatBE(cmd_req.FROMY, 78);
+            //FROMZ
+            sendBuf.writeFloatBE(cmd_req.FROMZ, 82);
+            //TOX
+            sendBuf.writeFloatBE(cmd_req.TOX, 86);
+            //TOY
+            sendBuf.writeFloatBE(cmd_req.TOY, 90);
+            //TOZ
+            sendBuf.writeFloatBE(cmd_req.TOZ, 94);
+            //COILINNDIA
+            sendBuf.writeFloatBE(cmd_req.COILINNDIA, 98);
+            //COILOUTIDA
+            sendBuf.writeFloatBE(cmd_req.COILOUTDIA, 102);
+            //COILWIDTH
+            sendBuf.writeFloatBE(cmd_req.COILWIDTH, 106);
+            //COILWEIGHT
+            sendBuf.writeFloatBE(cmd_req.COILWEIGHT, 110);
 
+            client1.write(sendBuf);
+            //sio.sockets.emit('reqCMD', cmd_req);
+            delete sendBuf;
+            console.log('[CMD] -> [PLC]: ' + status_query.WORKTIME);
+
+        });
+
+    });
+/*
     setInterval(function() {
         var sendBuf = new Buffer(114);
         sendBuf.fill(0, 0, 114);
 
         var currentDT = moment(new Date()).format('YYYYMMDDHHmmss');
         cmd_req = {
-            WORKID: 'CMDGET01',
+            WORKID: 'CMDPUT01',
             HOUSEID: '25',
             CRANEID: 'D0822',
             WORKTIME: currentDT,
@@ -224,7 +297,7 @@ client1.connect(PORT1, HOST, function() {
         delete sendBuf;
         console.log('[CMD] -> [PLC]: ' + status_query.WORKTIME);
     }, 1000);
-
+*/
     //RECV COMMAND ACK
     client1.on('data', function(data) {
         var recvBuf = new Buffer(data);

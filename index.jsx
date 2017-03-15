@@ -16,6 +16,7 @@ import WMSCMD from './components/wmscmd.jsx';
 import WMSACK from './components/wmsack.jsx';
 import ActionRecv from './components/actionrecv.jsx';
 import ActionACK from './components/actionack.jsx';
+import CoilPTY from './components/coil.jsx';
 
 
 injectTapEventPlugin();
@@ -48,6 +49,7 @@ class App extends React.Component {
                     <ActionRecv />
                     <ActionACK />
                     <CraneAction />
+                    <CoilPTY />
                 </div>
             </MuiThemeProvider>
         );
