@@ -7,13 +7,13 @@ module.exports = {
         filename: 'bundle.js'
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            compressor: {
-                warnings: false,
-            },
-        }),
+        ////new webpack.optimize.UglifyJsPlugin({
+        ////    compressor: {
+        ////        warnings: false,
+        ////    },
+        ////}),
         //new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin(),
+        ////new webpack.optimize.UglifyJsPlugin(),
         /*
         new webpack.BannerPlugin([
             "//",
@@ -38,8 +38,8 @@ module.exports = {
             //{test: /\.jsx?$/, loader: 'babel'}        // need .babelrc, {"presets" : ["es2015", "react"]},
             //{test: /\.jsx?$/, loader: 'babel-loader', query: {presets: ['es2015', 'react']}},     // valid for webpack, fail for webpack-dev-server
             {test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/, query: {presets: ['es2015', 'react']}},
-            {test: /\.css$/, loader: 'style-loader!css-loader'}
-
+            //{test: /\.css$/, loader: 'style-loader!css-loader'}
+            {test: /\.css$/, loader: 'style-loader!css-loader?modules'}
         ]
     }
 };

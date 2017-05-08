@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import cio from 'socket.io-client';
+import moment from 'moment';
 
 const PaperStyle = {
     //height: 400,
@@ -31,9 +32,9 @@ export default class WMSCMD extends React.Component {
             CRANEID: 'D0822',
             WORKTIME: '20170315163000',
             COILID: 'F12345',
-            FROMX: 4.1,
-            FROMY: 1.5,
-            FROMZ: 5.5,
+            FROMX: 0.0,
+            FROMY: 0.0,
+            FROMZ: 0.0,
             TOX: 20.0,
             TOY: 12.5,
             TOZ: 5.8,
@@ -42,8 +43,21 @@ export default class WMSCMD extends React.Component {
             COILWIDTH: 1.2,
             COILWEIGHT: 9.6
         };
+        this.updateData = this.updateData.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSend = this.handleSend.bind(this);
+    }
+    componentDidMount() {
+        this.socket.on('rspCraneStatus', this.updateData);
+    }
+    updateData(data) {
+        var currentDT = moment(new Date()).format('YYYYMMDDHHmmss');
+        this.setState({
+            WORKTIME: currentDT,
+            FROMX: data.POSX,
+            FROMY: data.POSY,
+            FROMZ: data.POSZ
+        });
     }
     handleChange(e) {
         this.setState({[e.target.name]: e.target.value});
@@ -62,7 +76,16 @@ export default class WMSCMD extends React.Component {
                     </tr>
                     <tr>
                         <td>WORKID</td>
+                        {/*
                         <td><input hintText="WORKID" style={TextFieldStyle} name="COILID" value={this.state.WORKID} onChange={this.handleChange} /></td>
+                        */}
+                        <td>
+                            <select name="WORKID" value={this.state.WORKID} onChange={this.handleChange}>
+                                <option value="CMDMOV01">移動</option>
+                                <option value="CMDGET01">夾</option>
+                                <option value="CMDPUT01">放</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>HOUSEID</td>
@@ -110,7 +133,7 @@ export default class WMSCMD extends React.Component {
                     </tr>
                     <tr>
                         <td>COILOUTDIA</td>
-                        <td><input hintText="COILOUTDIA" style={TextFieldStyle} name="HOUSCOILOUTDIAEID" value={this.state.COILOUTDIA} onChange={this.handleChange} /></td>
+                        <td><input hintText="COILOUTDIA" style={TextFieldStyle} name="COILOUTDIA" value={this.state.COILOUTDIA} onChange={this.handleChange} /></td>
                     </tr>
                     <tr>
                         <td>COILWIDTH</td>

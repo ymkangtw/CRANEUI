@@ -2,7 +2,7 @@ var express = require('express');
 var moment = require('moment');
 var net = require('net');
 
-var HOST = '192.168.0.101';
+var HOST = '192.168.0.100';
 var PORT1 = 2000;
 var PORT2 = 2001;
 var PORT3 = 2002;
@@ -11,8 +11,6 @@ var app = express();
 app.use(express.static(__dirname));
 var server = app.listen(80);
 var sio = require('socket.io').listen(server);
-
-
 
 var client1 = new net.Socket();
 var client2 = new net.Socket();
@@ -58,9 +56,9 @@ client2.connect(PORT2, HOST, function() {
         action_completed_recv.WORKTIME = recvBuf.slice(40, 40 + recvBuf.readInt8(39)).toString().trim();
         action_completed_recv.COILID = recvBuf.slice(58, 58 + recvBuf.readInt8(57)).toString().trim();
         action_completed_recv.RESULT = recvBuf.readInt16BE(74);
-        action_completed_recv.POSX = recvBuf.readFloatBE(76).toFixed(2);
-        action_completed_recv.POSY = recvBuf.readFloatBE(80).toFixed(2);
-        action_completed_recv.POSZ = recvBuf.readFloatBE(84).toFixed(2);
+        action_completed_recv.POSX = recvBuf.readFloatBE(76).toFixed(4);
+        action_completed_recv.POSY = recvBuf.readFloatBE(80).toFixed(4);
+        action_completed_recv.POSZ = recvBuf.readFloatBE(84).toFixed(4);
         action_completed_recv.ERRORCODE = recvBuf.readInt16BE(88);
         sio.sockets.emit('recvActionCompleted', action_completed_recv);
         console.log('[ACT] <- [PLC]: ' + action_completed_recv.WORKTIME);
@@ -171,6 +169,9 @@ client1.connect(PORT1, HOST, function() {
                 FROMX: data.FROMX,
                 FROMY: data.FROMY,
                 FROMZ: data.FROMZ,
+                //FROMX: status_result.POSX,
+                //FROMY: status_result.POSY,
+                //FROMZ: status_result.POSZ,
                 TOX: data.TOX,
                 TOY: data.TOY,
                 TOZ: data.TOZ,
@@ -309,16 +310,16 @@ client1.connect(PORT1, HOST, function() {
         cmd_ack.CMDWORKTIME = recvBuf.slice(76, 76 + recvBuf.readInt8(75)).toString().trim();
         cmd_ack.ERRORCODE = recvBuf.readInt16BE(92);
         cmd_ack.COILID = recvBuf.slice(96, 96 + recvBuf.readInt8(95)).toString().trim();
-        cmd_ack.FROMX = recvBuf.readFloatBE(112).toFixed(2);
-        cmd_ack.FROMY = recvBuf.readFloatBE(116).toFixed(2);
-        cmd_ack.FROMZ = recvBuf.readFloatBE(120).toFixed(2);
-        cmd_ack.TOX = recvBuf.readFloatBE(124).toFixed(2);
-        cmd_ack.TOY = recvBuf.readFloatBE(128).toFixed(2);
-        cmd_ack.TOZ = recvBuf.readFloatBE(132).toFixed(2);
-        cmd_ack.COILINNDIA = recvBuf.readFloatBE(136).toFixed(2);
-        cmd_ack.COILOUTDIA = recvBuf.readFloatBE(140).toFixed(2);
-        cmd_ack.COILWIDTH = recvBuf.readFloatBE(144).toFixed(2);
-        cmd_ack.COILWEIGHT = recvBuf.readFloatBE(148).toFixed(2);
+        cmd_ack.FROMX = recvBuf.readFloatBE(112).toFixed(4);
+        cmd_ack.FROMY = recvBuf.readFloatBE(116).toFixed(4);
+        cmd_ack.FROMZ = recvBuf.readFloatBE(120).toFixed(4);
+        cmd_ack.TOX = recvBuf.readFloatBE(124).toFixed(4);
+        cmd_ack.TOY = recvBuf.readFloatBE(128).toFixed(4);
+        cmd_ack.TOZ = recvBuf.readFloatBE(132).toFixed(4);
+        cmd_ack.COILINNDIA = recvBuf.readFloatBE(136).toFixed(4);
+        cmd_ack.COILOUTDIA = recvBuf.readFloatBE(140).toFixed(4);
+        cmd_ack.COILWIDTH = recvBuf.readFloatBE(144).toFixed(4);
+        cmd_ack.COILWEIGHT = recvBuf.readFloatBE(148).toFixed(4);
         console.log('[CMD] <- [PLC]: ' + cmd_ack.WORKTIME);
         sio.sockets.emit('rspCMDACK', cmd_ack);
         delete recvBuf;
@@ -405,9 +406,9 @@ client3.connect(PORT3, HOST, function() {
         status_result.CRANEID = recvBuf.slice(30, 30 + recvBuf.readInt8(29)).toString().trim();
         status_result.WORKTIME = recvBuf.slice(40, 40 + recvBuf.readInt8(39)).toString().trim();
         status_result.RESULT = recvBuf.readInt16BE(56);
-        status_result.POSX = recvBuf.readFloatBE(58).toFixed(2);
-        status_result.POSY = recvBuf.readFloatBE(62).toFixed(2);
-        status_result.POSZ = recvBuf.readFloatBE(66).toFixed(2);
+        status_result.POSX = recvBuf.readFloatBE(58).toFixed(4);
+        status_result.POSY = recvBuf.readFloatBE(62).toFixed(4);
+        status_result.POSZ = recvBuf.readFloatBE(66).toFixed(4);
         status_result.DEVSTATUS = recvBuf.readInt32BE(70);
         status_result.ERRORCODE = recvBuf.readInt16BE(74);
         status_result.ACCEPTABLE = recvBuf.readInt16BE(76);

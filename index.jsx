@@ -16,7 +16,10 @@ import WMSCMD from './components/wmscmd.jsx';
 import WMSACK from './components/wmsack.jsx';
 import ActionRecv from './components/actionrecv.jsx';
 import ActionACK from './components/actionack.jsx';
-import CoilPTY from './components/coil.jsx';
+//import CoilPTY from './components/coil.jsx';
+//import TodoApp from './components/todo.jsx';
+
+import TodoBox from './components/todolist.jsx';
 
 
 injectTapEventPlugin();
@@ -32,6 +35,10 @@ class App extends React.Component {
     }
 }
 */
+var todoItems = [];
+todoItems.push({ index: 1, value: "learn react", done: false });
+todoItems.push({ index: 2, value: "Go shopping", done: true });
+todoItems.push({ index: 3, value: "buy flowers", done: true });
 
 const lightMuiTheme = getMuiTheme(lightBaseTheme);
 
@@ -49,7 +56,9 @@ class App extends React.Component {
                     <ActionRecv />
                     <ActionACK />
                     <CraneAction />
-                    <CoilPTY />
+                    <TodoBox />
+                    {/*<CoilPTY />*/}
+                    {/*<TodoApp initItems={todoItems} />*/}
                 </div>
             </MuiThemeProvider>
         );
