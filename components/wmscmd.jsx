@@ -38,10 +38,10 @@ export default class WMSCMD extends React.Component {
             TOX: 20.0,
             TOY: 12.5,
             TOZ: 5.8,
-            COILINNDIA: 0.508,
+            COILINNDIA: 0.61,
             COILOUTDIA: 1.1,
-            COILWIDTH: 1.2,
-            COILWEIGHT: 9.6
+            COILWIDTH: 1.1,
+            COILWEIGHT: 5.8
         };
         this.updateData = this.updateData.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -81,6 +81,12 @@ export default class WMSCMD extends React.Component {
                         */}
                         <td>
                             <select name="WORKID" value={this.state.WORKID} onChange={this.handleChange}>
+                                <option value="CMDCON01">CRANE ON</option>
+                                <option value="CMDCOF01">CRANE OFF</option>
+                                <option value="CMDTSYNC">時間同步</option>
+                                <option value="CMDESTOP">E-STOP</option>
+                                <option value="CMDGET02">移動 & 夾</option>
+                                <option value="CMDPUT02">移動 & 放</option>
                                 <option value="CMDMOV01">移動</option>
                                 <option value="CMDGET01">夾</option>
                                 <option value="CMDPUT01">放</option>

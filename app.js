@@ -392,7 +392,7 @@ client3.connect(PORT3, HOST, function() {
         sio.sockets.emit('reqCraneStatus', status_query);
         delete sendBuf;
         console.log('[QRY] -> [PLC]: ' + status_query.WORKTIME);
-    }, 1000);
+    }, 500);
     //RECV QUERY DATA
     client3.on('data', function(data) {
 

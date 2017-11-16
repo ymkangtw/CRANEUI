@@ -67,6 +67,9 @@ export default class WMSACK extends React.Component {
                         <td>CMDWORKTIME</td><td>{this.state.rspData.CMDWORKTIME}</td>
                     </tr>
                     <tr>
+                        <td>ERRORCODE</td><td>{this.state.rspData.ERRORCODE}</td>
+                    </tr>
+                    <tr>
                         <td>COILID</td><td>{this.state.rspData.COILID}</td>
                     </tr>
                     <tr>
